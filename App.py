@@ -31,30 +31,28 @@ with app.app_context():
 def Index():
   allData = Data.query.all()
 
-  return render_template("index.html", employees = allData)
+  return render_template("index.html", employees=allData)
 
 
-@app.route('/insert',  methods = ['POST'])
+@app.route('/insert',  methods=['POST'])
 def insert():
 
   if request.method == 'POST':
 
-            flash("Employee Inserted Successfully!")
+      flash("Employee Inserted Successfully!")
 
-            name = request.form['name']
-            email = request.form['email']
-            phone = request.form['phone']
+      name = request.form['name']
+      email = request.form['email']
+      phone = request.form['phone']
 
-            myData = Data(name, email, phone)
-            db.session.add(myData)
-            db.session.commit()
+      myData = Data(name, email, phone)
+      db.session.add(myData)
+      db.session.commit()
 
-
-            return redirect(url_for('Index'))
-
+      return redirect(url_for('Index'))
 
 
-@app.route('/update',  methods =['GET' , 'POST'])
+@app.route('/update',  methods=['GET', 'POST'])
 def update():
 
   if request.method == 'POST':
@@ -63,11 +61,22 @@ def update():
     myData.name = request.form['name']
     myData.email = request.form['email']
     myData.phone = request.form['phone']
-    
+
     db.session.commit()
     flash("Employee Update Successfully.")
 
     return redirect(url_for('Index'))
+
+
+@app.route('/delete/<id>/', methods=['GET', 'POST'])
+def delete(id):
+  myData = Data.query.get(id)
+  db.session.delete(myData)
+  db.session.commit()
+
+  flash("Employee Deleted Successfully.")
+
+  return redirect(url_for('Index'))
 
 
 if __name__ == "__main__":
