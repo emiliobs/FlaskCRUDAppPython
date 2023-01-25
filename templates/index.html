@@ -17,9 +17,20 @@ Home
 				<h2>Manage <b>Emplpyees</b> <button type="button" class="btn btn-success float-right" data-bs-toggle="modal"
 						data-bs-target="#mymodal">Add New Employee</button></h2>
 
+						{%with messages = get_flashed_messages()%}
+						{%if messages%}
+						{% for message in messages %}
+		
+						<div class="alert alert-success alert-dismissible fade show" role="alert">
+							<strong>{{message}}</strong>
+							<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+						</div>
+		
+						{%endfor%}
+						{%endif%}
+						{%endwith%}
 
-
-				<table class="table table-hover table-dark">
+				<table class="table table-hover table-dark table-hover">
 
 					<tr>
 						<th>Id</th>
@@ -112,31 +123,35 @@ Home
 
 									<div class="form-group">
 										<label for="name" class="form-label">Name:</label>
-										<input type="text" name="name" class="form-control" id="name" placeholder="Enter Full Name....." required>
+										<input type="text" name="name" class="form-control" id="name" placeholder="Enter Full Name....."
+											required>
 									</div>
 
 									<div class="form-group">
 										<label for="email" class="form-label">Email:</label>
-										<input type="email" class="form-control" name="email" id="email" placeholder="Enter Email....." required>
+										<input type="email" class="form-control" name="email" id="email" placeholder="Enter Email....."
+											required>
 									</div>
 
 									<div class="form-group">
 										<label for="phone" class="form-label">Phone:</label>
-										<input type="number" class="form-control" name="phone" id="phone" placeholder="Enter Phone" required>
+										<input type="number" class="form-control" name="phone" id="phone" placeholder="Enter Phone"
+											required>
 									</div>
 
 
 									<div class="form-group">
-										<div class="modal-footer">
-											<button type="submit" class="btn btn-primary">Add Employee</button>
-											<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-										</div>
+										<button type="submit" class="btn btn-primary">Add Employee</button>
+
 									</div>
 
 								</form>
 
 							</div>
 
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+							</div>
 						</div>
 					</div>
 				</div>

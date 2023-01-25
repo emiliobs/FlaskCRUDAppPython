@@ -35,7 +35,7 @@ def Index():
 @app.route('/insert',  methods = ['POST'])
 def insert():
 
-  flash("Data Inserted Successfully!")
+  
 
   if request.method == 'POST':
 
@@ -46,6 +46,8 @@ def insert():
             myData = Data(name, email, phone)
             db.session.add(myData)
             db.session.commit()
+
+            flash("Employee Inserted Successfully!")
 
             return redirect(url_for('Index'))
 
