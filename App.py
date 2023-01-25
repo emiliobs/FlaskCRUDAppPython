@@ -29,15 +29,17 @@ with app.app_context():
 
 @app.route('/')
 def Index():
-  return render_template("index.html")
+  allData = Data.query.all()
+
+  return render_template("index.html", employees = allData)
 
 
 @app.route('/insert',  methods = ['POST'])
 def insert():
 
-  
-
   if request.method == 'POST':
+
+            flash("Employee Inserted Successfully!")
 
             name = request.form['name']
             email = request.form['email']
@@ -47,7 +49,6 @@ def insert():
             db.session.add(myData)
             db.session.commit()
 
-            flash("Employee Inserted Successfully!")
 
             return redirect(url_for('Index'))
 
