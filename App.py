@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, flash, render_template, request, url_for, redirect
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -11,17 +11,18 @@ db = SQLAlchemy(app)
 
 
 class Data(db.Model):
-    Id = db.Column(db.Integer, primary_key=True)
-    Name = db.Column(db.String(100))
-    Email = db.Column(db.String(100))
-    Phone = db.Column(db.String(100))
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100))
+    email = db.Column(db.String(100))
+    phone = db.Column(db.String(100))
 
     def __init__(self, name, email, phone):
-        self.Name = name
-        self.Email = email
-        self.Phone = phone
+        self.name = name
+        self.email = email
+        self.phone = phone
 
 
+# this function created the tables in the database
 with app.app_context():
     db.create_all()
 
@@ -29,6 +30,24 @@ with app.app_context():
 @app.route('/')
 def Index():
   return render_template("index.html")
+
+
+@app.route('/insert',  methods = ['POST'])
+def insert():
+
+  flash("Data Inserted Successfully!")
+
+  if request.method == 'POST':
+
+            name = request.form['name']
+            email = request.form['email']
+            phone = request.form['phone']
+
+            myData = Data(name, email, phone)
+            db.session.add(myData)
+            db.session.commit()
+
+            return redirect(url_for('Index'))
 
 
 if __name__ == "__main__":
